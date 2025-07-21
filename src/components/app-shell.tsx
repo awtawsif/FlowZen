@@ -6,31 +6,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { SidebarNav } from './sidebar-nav';
 import { TaskView } from './task-view';
 
-const initialLists: List[] = [
-  {
-    id: '1',
-    name: 'Personal Errands',
-    description: 'Daily and weekly personal tasks.',
-    tasks: [
-      { id: '1-1', title: 'Buy groceries', completed: false, subtasks: [] },
-      { id: '1-2', title: 'Go to the post office', completed: true, dueDate: new Date(), subtasks: [] },
-      { id: '1-3', title: 'Schedule dentist appointment', completed: false, description: 'Call Dr. Smith\'s office to schedule a cleaning.', subtasks: [] },
-    ],
-  },
-  {
-    id: '2',
-    name: 'Work Projects',
-    description: 'Tasks related to the new website launch.',
-    tasks: [
-      { id: '2-1', title: 'Design homepage mockups', completed: false, subtasks: [
-        { id: '2-1-1', title: 'Gather inspiration', completed: true },
-        { id: '2-1-2', title: 'Create wireframes', completed: true },
-        { id: '2-1-3', title: 'Finalize color palette', completed: false },
-      ]},
-      { id: '2-2', title: 'Develop API endpoints', completed: false, dueDate: new Date(new Date().setDate(new Date().getDate() + 7)), subtasks: [] },
-    ],
-  },
-];
+const initialLists: List[] = [];
 
 
 export function AppShell() {
@@ -102,15 +78,25 @@ export function AppShell() {
         onAddList={handleAddList}
       />
       <SidebarInset className="flex flex-col">
-          <div className="p-4 border-b flex items-center gap-2">
-            <h1 className="text-2xl font-bold">{selectedList?.name}</h1>
-          </div>
-          <TaskView 
-            list={selectedList!}
-            onUpdateTask={handleUpdateTask}
-            onDeleteTask={handleDeleteTask}
-            onAddTask={handleAddTask}
-          />
+          {selectedList ? (
+            <>
+              <div className="p-4 border-b flex items-center gap-2">
+                <h1 className="text-2xl font-bold">{selectedList?.name}</h1>
+              </div>
+              <TaskView 
+                list={selectedList!}
+                onUpdateTask={handleUpdateTask}
+                onDeleteTask={handleDeleteTask}
+                onAddTask={handleAddTask}
+              />
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
+              <p>Select a list to see your tasks</p>
+              <p className="text-sm">or create a new one to get started.</p>
+            </div>
+          )}
+
       </SidebarInset>
     </SidebarProvider>
   );
