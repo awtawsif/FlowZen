@@ -60,7 +60,7 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
         <SidebarFooter>
           <Button variant="ghost" className="w-full justify-start" onClick={() => setIsAddListOpen(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            New List
+            <span className="group-data-[collapsible=icon]:hidden">New List</span>
           </Button>
           <SidebarSeparator />
           <ThemeSwitcher />
