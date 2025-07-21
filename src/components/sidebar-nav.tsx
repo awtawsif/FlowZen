@@ -1,0 +1,69 @@
+"use client";
+
+import { useState } from 'react';
+import { List as ListIcon, Plus } from 'lucide-react';
+
+import type { List } from '@/lib/types';
+import { AddListDialog } from '@/components/add-list-dialog';
+import { Logo } from '@/components/logo';
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+} from '@/components/ui/sidebar';
+import { Button } from './ui/button';
+
+type SidebarNavProps = {
+  lists: List[];
+  selectedListId: string | null;
+  onSelectList: (id: string) => void;
+  onAddList: (list: Omit<List, 'id' | 'tasks'>) => void;
+};
+
+export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: SidebarNavProps) {
+  const [isAddListOpen, setIsAddListOpen] = useState(false);
+
+  return (
+    <>
+      <Sidebar>
+        <SidebarHeader>
+          <div className="flex items-center gap-2">
+            <Logo className="w-6 h-6 text-primary" />
+            <span className="text-lg font-semibold">FlowZen</span>
+          </div>
+        </SidebarHeader>
+        <SidebarContent className="p-2">
+          <SidebarMenu>
+            {lists.map((list) => (
+              <SidebarMenuItem key={list.id}>
+                <SidebarMenuButton
+                  onClick={() => onSelectList(list.id)}
+                  isActive={selectedListId === list.id}
+                  className="w-full justify-start"
+                >
+                  <ListIcon className="h-4 w-4" />
+                  <span>{list.name}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarContent>
+        <SidebarFooter>
+          <Button variant="ghost" className="w-full justify-start" onClick={() => setIsAddListOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            New List
+          </Button>
+        </SidebarFooter>
+      </Sidebar>
+      <AddListDialog
+        isOpen={isAddListOpen}
+        onOpenChange={setIsAddListOpen}
+        onAddList={onAddList}
+      />
+    </>
+  );
+}
