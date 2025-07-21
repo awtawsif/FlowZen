@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  devServer: {
+    // This is necessary to allow the Next.js dev server to be accessed from the Firebase Studio preview.
+    // In a future version of Next.js, this will be required.
+    allowedHosts: "all",
+  }
 };
 
 export default nextConfig;
