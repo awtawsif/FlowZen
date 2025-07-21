@@ -36,7 +36,7 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Logo className="w-6 h-6 text-primary" />
-            <span className="text-lg font-semibold">FlowZen</span>
+            <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">FlowZen</span>
           </div>
           <SidebarTrigger className="hidden md:flex" />
         </SidebarHeader>
