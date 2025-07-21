@@ -18,8 +18,8 @@ export function ThemeSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="w-full justify-start">
-          <Palette className="h-4 w-4 mr-2" />
+        <Button variant="ghost" className="w-full justify-start group-data-[collapsible=icon]:justify-center">
+          <Palette className="h-4 w-4 mr-2 group-data-[collapsible=icon]:mr-0" />
           <span className="group-data-[collapsible=icon]:hidden">Change Theme</span>
         </Button>
       </DropdownMenuTrigger>
