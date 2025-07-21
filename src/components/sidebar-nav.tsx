@@ -39,7 +39,6 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
                 <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">FlowZen</span>
                 <SidebarTrigger className="absolute inset-0 z-10 size-full bg-transparent p-0 [&>svg]:hidden" />
             </div>
-          <SidebarTrigger />
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
