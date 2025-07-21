@@ -14,8 +14,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
+  SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Button } from './ui/button';
+import { ThemeSwitcher } from './theme-switcher';
 
 type SidebarNavProps = {
   lists: List[];
@@ -57,6 +59,8 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
             <Plus className="h-4 w-4 mr-2" />
             New List
           </Button>
+          <SidebarSeparator />
+          <ThemeSwitcher />
         </SidebarFooter>
       </Sidebar>
       <AddListDialog
