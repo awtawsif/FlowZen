@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { List as ListIcon, Plus } from 'lucide-react';
+import { List as ListIcon, Plus, Settings } from 'lucide-react';
 
 import type { List } from '@/lib/types';
 import { AddListDialog } from '@/components/add-list-dialog';
@@ -19,6 +19,8 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from './ui/button';
 import { ThemeSwitcher } from './theme-switcher';
+import { SettingsDialog } from './settings-dialog';
+
 
 type SidebarNavProps = {
   lists: List[];
@@ -29,6 +31,7 @@ type SidebarNavProps = {
 
 export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: SidebarNavProps) {
   const [isAddListOpen, setIsAddListOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <>
@@ -63,6 +66,10 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
             <span className="group-data-[collapsible=icon]:hidden">New List</span>
           </Button>
           <SidebarSeparator />
+           <Button variant="ghost" className="w-full justify-start group-data-[collapsible=icon]:justify-center" onClick={() => setIsSettingsOpen(true)}>
+            <Settings className="h-4 w-4 mr-2 group-data-[collapsible=icon]:mr-0" />
+            <span className="group-data-[collapsible=icon]:hidden">Settings</span>
+          </Button>
           <ThemeSwitcher />
         </SidebarFooter>
       </Sidebar>
@@ -70,6 +77,10 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
         isOpen={isAddListOpen}
         onOpenChange={setIsAddListOpen}
         onAddList={onAddList}
+      />
+       <SettingsDialog
+        isOpen={isSettingsOpen}
+        onOpenChange={setIsSettingsOpen}
       />
     </>
   );

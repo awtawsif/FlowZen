@@ -29,6 +29,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import type { List } from '@/lib/types';
+import { getApiKey, isGeminiError } from '@/lib/utils';
 
 const formSchema = z.object({
   name: z.string().min(1, 'List name is required.'),
@@ -55,6 +56,14 @@ export function AddListDialog({ isOpen, onOpenChange, onAddList }: AddListDialog
   });
 
   const handleSuggestName = async () => {
+    if (!getApiKey()) {
+      toast({
+        variant: 'destructive',
+        title: 'API Key Missing',
+        description: 'Please set your Gemini API key in the settings.',
+      });
+      return;
+    }
     const description = form.getValues('description');
     if (!description) {
       toast({
@@ -70,6 +79,14 @@ export function AddListDialog({ isOpen, onOpenChange, onAddList }: AddListDialog
       form.setValue('name', result.listName);
     } catch (error) {
       console.error(error);
+      if (isGeminiError(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'AI Suggestion Failed',
+          description: error.message,
+        });
+        return;
+      }
       toast({
         variant: 'destructive',
         title: 'Suggestion failed',
@@ -81,6 +98,14 @@ export function AddListDialog({ isOpen, onOpenChange, onAddList }: AddListDialog
   };
 
   const handleSuggestDescription = async () => {
+    if (!getApiKey()) {
+      toast({
+        variant: 'destructive',
+        title: 'API Key Missing',
+        description: 'Please set your Gemini API key in the settings.',
+      });
+      return;
+    }
     const name = form.getValues('name');
     if (!name) {
       toast({
@@ -96,6 +121,14 @@ export function AddListDialog({ isOpen, onOpenChange, onAddList }: AddListDialog
       form.setValue('description', result.listDescription);
     } catch (error) {
       console.error(error);
+       if (isGeminiError(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'AI Suggestion Failed',
+          description: error.message,
+        });
+        return;
+      }
       toast({
         variant: 'destructive',
         title: 'Suggestion failed',

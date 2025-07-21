@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import type { Task } from '@/lib/types';
 import { suggestTaskTitle } from '@/ai/flows/suggest-task-title';
 import { useToast } from '@/hooks/use-toast';
+import { getApiKey, isGeminiError } from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Task title cannot be empty.'),
@@ -38,6 +39,14 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
   });
 
   const handleSuggestTitle = async () => {
+    if (!getApiKey()) {
+      toast({
+        variant: 'destructive',
+        title: 'API Key Missing',
+        description: 'Please set your Gemini API key in the settings.',
+      });
+      return;
+    }
     const description = form.getValues('description');
     if (!description) {
       toast({
@@ -53,6 +62,14 @@ export function AddTaskForm({ onAddTask }: AddTaskFormProps) {
       form.setValue('title', result.taskTitle);
     } catch (error) {
       console.error(error);
+      if (isGeminiError(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'AI Suggestion Failed',
+          description: error.message,
+        });
+        return;
+      }
       toast({
         variant: 'destructive',
         title: 'Suggestion failed',

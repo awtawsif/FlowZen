@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { Calendar, Check, Circle, Loader2, MoreHorizontal, Sparkles, Trash2 } from 'lucide-react';
 import { suggestSubtasks } from '@/ai/flows/suggest-subtasks';
-import { cn } from '@/lib/utils';
+import { cn, getApiKey, isGeminiError } from '@/lib/utils';
 import type { Subtask, Task } from '@/lib/types';
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -36,6 +36,14 @@ export function TaskItem({ task, onUpdateTask, onDeleteTask }: TaskItemProps) {
   };
 
   const handleSuggestSubtasks = async () => {
+    if (!getApiKey()) {
+      toast({
+        variant: 'destructive',
+        title: 'API Key Missing',
+        description: 'Please set your Gemini API key in the settings.',
+      });
+      return;
+    }
     setIsSuggesting(true);
     try {
       const results = await suggestSubtasks({ taskDescription: task.title });
@@ -51,6 +59,14 @@ export function TaskItem({ task, onUpdateTask, onDeleteTask }: TaskItemProps) {
       });
     } catch (error) {
       console.error(error);
+      if (isGeminiError(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'AI Suggestion Failed',
+          description: error.message,
+        });
+        return;
+      }
       toast({
         variant: 'destructive',
         title: 'Suggestion failed',
