@@ -7,7 +7,7 @@ body {
 }
 
 @layer base {
-  :root {
+  :root, [data-theme="light"] {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -43,7 +43,7 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
+  [data-theme="dark"] {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -78,7 +78,7 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   
-  .theme-rose {
+  [data-theme="rose"] {
     --background: 350 100% 99%;
     --foreground: 349 69% 15%;
     --card: 350 100% 99%;
@@ -108,7 +108,7 @@ body {
     --sidebar-ring: 347 89% 67%;
   }
   
-  .theme-green {
+  [data-theme="green"] {
     --background: 140 80% 98%;
     --foreground: 145 60% 10%;
     --card: 140 80% 98%;
