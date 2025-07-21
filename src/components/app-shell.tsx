@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { List, Task } from '@/lib/types';
-import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { SidebarNav } from './sidebar-nav';
 import { TaskView } from './task-view';
 
@@ -103,7 +103,6 @@ export function AppShell() {
       />
       <SidebarInset className="flex flex-col">
           <div className="p-4 border-b flex items-center gap-2">
-            <SidebarTrigger className="md:hidden" />
             <h1 className="text-2xl font-bold">{selectedList?.name}</h1>
           </div>
           <TaskView 

@@ -34,11 +34,14 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
     <>
       <Sidebar collapsible="icon">
         <SidebarHeader>
-          <div className="flex items-center gap-2">
-            <Logo className="w-6 h-6 text-primary" />
-            <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">FlowZen</span>
-          </div>
-          <SidebarTrigger className="hidden md:flex" />
+          <SidebarTrigger asChild>
+            <Button variant="ghost" className="w-full justify-start gap-2 h-auto p-0">
+              <div className="flex items-center gap-2 p-2">
+                <Logo className="w-6 h-6 text-primary shrink-0" />
+                <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">FlowZen</span>
+              </div>
+            </Button>
+          </SidebarTrigger>
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
