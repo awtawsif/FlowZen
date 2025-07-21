@@ -33,15 +33,12 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
   return (
     <>
       <Sidebar collapsible="icon">
-        <SidebarHeader>
-          <SidebarTrigger asChild>
-            <Button variant="ghost" className="w-full justify-start gap-2 h-auto p-0">
-              <div className="flex items-center gap-2 p-2">
+        <SidebarHeader className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
                 <Logo className="w-6 h-6 text-primary shrink-0" />
                 <span className="text-lg font-semibold group-data-[collapsible=icon]:hidden">FlowZen</span>
-              </div>
-            </Button>
-          </SidebarTrigger>
+            </div>
+          <SidebarTrigger />
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
