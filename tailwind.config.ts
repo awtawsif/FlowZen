@@ -7,6 +7,10 @@ export default {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  safelist: [
+    'theme-rose',
+    'theme-green',
+  ],
   theme: {
     extend: {
       fontFamily: {
