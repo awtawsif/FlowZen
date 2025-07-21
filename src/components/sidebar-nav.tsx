@@ -47,11 +47,11 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
                 <SidebarMenuButton
                   onClick={() => onSelectList(list.id)}
                   isActive={selectedListId === list.id}
-                  className="w-full justify-start"
+                  className="w-full justify-start group-data-[collapsible=icon]:justify-center"
                   tooltip={list.name}
                 >
                   <ListIcon className="h-4 w-4" />
-                  <span>{list.name}</span>
+                  <span className="group-data-[collapsible=icon]:hidden">{list.name}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
