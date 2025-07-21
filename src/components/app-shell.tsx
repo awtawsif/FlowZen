@@ -102,8 +102,9 @@ export function AppShell() {
         onAddList={handleAddList}
       />
       <SidebarInset className="flex flex-col">
-          <div className="p-2 md:hidden">
-              <SidebarTrigger/>
+          <div className="p-4 border-b flex items-center gap-2">
+            <SidebarTrigger className="md:hidden" />
+            <h1 className="text-2xl font-bold">{selectedList?.name}</h1>
           </div>
           <TaskView 
             list={selectedList!}

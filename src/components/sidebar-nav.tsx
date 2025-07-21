@@ -15,6 +15,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
   SidebarSeparator,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { Button } from './ui/button';
 import { ThemeSwitcher } from './theme-switcher';
@@ -31,12 +32,13 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
 
   return (
     <>
-      <Sidebar>
+      <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Logo className="w-6 h-6 text-primary" />
             <span className="text-lg font-semibold">FlowZen</span>
           </div>
+          <SidebarTrigger className="hidden md:flex" />
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
@@ -46,6 +48,7 @@ export function SidebarNav({ lists, selectedListId, onSelectList, onAddList }: S
                   onClick={() => onSelectList(list.id)}
                   isActive={selectedListId === list.id}
                   className="w-full justify-start"
+                  tooltip={list.name}
                 >
                   <ListIcon className="h-4 w-4" />
                   <span>{list.name}</span>

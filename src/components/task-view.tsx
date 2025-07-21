@@ -37,7 +37,6 @@ export function TaskView({ list, onUpdateTask, onDeleteTask, onAddTask }: TaskVi
   return (
     <div className="flex flex-col h-full">
       <header className="p-4 border-b">
-        <h1 className="text-2xl font-bold">{list.name}</h1>
         {list.description && <p className="text-muted-foreground">{list.description}</p>}
       </header>
       <div className="p-4">
