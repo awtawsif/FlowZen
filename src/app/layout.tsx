@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
@@ -26,7 +27,7 @@ export default function RootLayout({
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
-          themes={['light', 'dark', 'rose', 'green']}
+          themes={['light', 'dark', 'rose', 'green', 'custom']}
         >
           {children}
           <Toaster />
