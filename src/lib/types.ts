@@ -19,3 +19,10 @@ export type List = {
   description?: string;
   tasks: Task[];
 };
+
+export type Note = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+};

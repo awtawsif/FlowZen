@@ -1,21 +1,27 @@
 "use client";
 
 import { useState } from 'react';
-import type { List, Task } from '@/lib/types';
+import type { List, Note, Task } from '@/lib/types';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { SidebarNav } from './sidebar-nav';
 import { TaskView } from './task-view';
-
-const initialLists: List[] = [];
-
+import { NoteView } from './note-view';
 
 export function AppShell() {
-  const [lists, setLists] = useState<List[]>(initialLists);
-  const [selectedListId, setSelectedListId] = useState<string | null>(initialLists[0]?.id || null);
+  const [lists, setLists] = useState<List[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [activeView, setActiveView] = useState<'tasks' | 'notes'>('tasks');
+  const [selectedListId, setSelectedListId] = useState<string | null>(null);
 
   const handleSelectList = (id: string) => {
+    setActiveView('tasks');
     setSelectedListId(id);
   };
+
+  const handleSelectNotes = () => {
+    setActiveView('notes');
+    setSelectedListId(null);
+  }
 
   const handleAddList = (newListData: Omit<List, 'id' | 'tasks'>) => {
     const newList: List = {
@@ -24,6 +30,7 @@ export function AppShell() {
       tasks: [],
     };
     setLists((prev) => [...prev, newList]);
+    setActiveView('tasks');
     setSelectedListId(newList.id);
   };
 
@@ -66,6 +73,24 @@ export function AppShell() {
     }));
   };
 
+  const handleAddNote = () => {
+    const newNote: Note = {
+      id: crypto.randomUUID(),
+      title: 'New Note',
+      content: '',
+      createdAt: new Date(),
+    };
+    setNotes(prev => [newNote, ...prev]);
+  };
+
+  const handleUpdateNote = (updatedNote: Note) => {
+    setNotes(notes.map(note => note.id === updatedNote.id ? updatedNote : note));
+  };
+
+  const handleDeleteNote = (noteId: string) => {
+    setNotes(notes.filter(note => note.id !== noteId));
+  };
+
 
   const selectedList = lists.find(list => list.id === selectedListId);
 
@@ -74,11 +99,13 @@ export function AppShell() {
       <SidebarNav
         lists={lists}
         selectedListId={selectedListId}
+        activeView={activeView}
         onSelectList={handleSelectList}
+        onSelectNotes={handleSelectNotes}
         onAddList={handleAddList}
       />
       <SidebarInset className="flex flex-col">
-          {selectedList ? (
+          {activeView === 'tasks' && selectedList ? (
             <>
               <div className="p-4 border-b flex items-center gap-2">
                 <h1 className="text-2xl font-bold">{selectedList?.name}</h1>
@@ -90,13 +117,18 @@ export function AppShell() {
                 onAddTask={handleAddTask}
               />
             </>
+          ) : activeView === 'notes' ? (
+              <NoteView 
+                notes={notes}
+                onAddNote={handleAddNote}
+                onUpdateNote={handleUpdateNote}
+                onDeleteNote={handleDeleteNote}
+              />
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-              <p>Select a list to see your tasks</p>
-              <p className="text-sm">or create a new one to get started.</p>
+              <p>Select a list or notes to get started.</p>
             </div>
           )}
-
       </SidebarInset>
     </SidebarProvider>
   );
