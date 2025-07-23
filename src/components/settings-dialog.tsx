@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { getApiKey, setApiKey, getCustomTheme, setCustomTheme, hexToHsl, applyCustomTheme } from '@/lib/utils';
-import { useTheme } from 'next-themes';
+import { getApiKey, setApiKey } from '@/lib/utils';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -27,13 +26,9 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from './ui/separator';
 
 const formSchema = z.object({
   apiKey: z.string(),
-  primaryColor: z.string(),
-  backgroundColor: z.string(),
-  accentColor: z.string(),
 });
 
 type SettingsDialogProps = {
@@ -43,15 +38,11 @@ type SettingsDialogProps = {
 
 export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
   const { toast } = useToast();
-  const { setTheme } = useTheme();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       apiKey: '',
-      primaryColor: '#09090b',
-      backgroundColor: '#ffffff',
-      accentColor: '#f4f4f5',
     },
   });
 
@@ -61,46 +52,24 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
       if (storedApiKey) {
         form.setValue('apiKey', storedApiKey);
       }
-      const customTheme = getCustomTheme();
-      if (customTheme) {
-        form.setValue('primaryColor', customTheme.primary);
-        form.setValue('backgroundColor', customTheme.background);
-        form.setValue('accentColor', customTheme.accent);
-      }
     }
   }, [isOpen, form]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Save API Key
     if (values.apiKey) {
       setApiKey(values.apiKey);
+       toast({
+        title: 'Settings Saved',
+        description: 'Your Gemini API key has been saved.',
+      });
+    } else {
+        toast({
+        variant: 'destructive',
+        title: 'API Key Missing',
+        description: 'Please enter an API key to save.',
+      });
     }
-
-    // Save Custom Theme
-    const customTheme = {
-      primary: values.primaryColor,
-      background: values.backgroundColor,
-      accent: values.accentColor,
-    };
-    setCustomTheme(customTheme);
-
-    // Apply the theme immediately
-    const themeForCss = {
-        primary: hexToHsl(customTheme.primary),
-        background: hexToHsl(customTheme.background),
-        accent: hexToHsl(customTheme.accent),
-    };
-    applyCustomTheme(themeForCss);
-    setTheme('custom');
-
-
-    toast({
-      title: 'Settings Saved',
-      description: 'Your API key and custom theme have been saved.',
-    });
     onOpenChange(false);
-    // Reload to apply theme everywhere
-    window.location.reload();
   };
 
   return (
@@ -109,7 +78,7 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
           <DialogDescription>
-            Manage your application settings here.
+            Manage your application settings here. The Gemini API key is required for AI features.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -130,51 +99,6 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
                   )}
                 />
             </div>
-
-            <Separator />
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium">Custom Theme</h3>
-               <div className="grid grid-cols-3 gap-4">
-                 <FormField
-                  control={form.control}
-                  name="primaryColor"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Primary</FormLabel>
-                      <FormControl>
-                        <Input type="color" {...field} className="p-1 h-10 w-full"/>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                 <FormField
-                  control={form.control}
-                  name="backgroundColor"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Background</FormLabel>
-                      <FormControl>
-                         <Input type="color" {...field} className="p-1 h-10 w-full" />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-                 <FormField
-                  control={form.control}
-                  name="accentColor"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Accent</FormLabel>
-                      <FormControl>
-                         <Input type="color" {...field} className="p-1 h-10 w-full"/>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-               </div>
-            </div>
-
             <DialogFooter>
               <Button type="submit">Save Changes</Button>
             </DialogFooter>
