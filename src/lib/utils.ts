@@ -67,6 +67,11 @@ export function setCustomTheme(theme: CustomTheme): void {
 }
 
 export function hexToHsl(hex: string): HSLColor {
+    // Prevent errors if hex is undefined or not a string
+    if (typeof hex !== 'string') {
+      hex = '#000000';
+    }
+    
     // Remove the hash at the start if it's there
     hex = hex.replace(/^#/, '');
 
