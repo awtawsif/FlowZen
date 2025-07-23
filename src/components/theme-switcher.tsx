@@ -20,6 +20,7 @@ export function ThemeSwitcher() {
   const [hasCustomTheme, setHasCustomTheme] = React.useState(false);
 
   React.useEffect(() => {
+    // This effect will run on the client side after component mounts
     setHasCustomTheme(!!getCustomTheme());
   }, [])
 
@@ -28,8 +29,8 @@ export function ThemeSwitcher() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="w-full justify-start group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:group-data-[collapsible=icon]:justify-center">
-          <Palette className="h-4 w-4 mr-2 group-data-[collapsible=icon]:mr-0" />
-          <span className="group-data-[collapsible=icon]:hidden">Change Theme</span>
+           <Palette className="h-4 w-4 mr-2 group-data-[collapsible=icon]:mr-0" />
+           <span className="group-data-[collapsible=icon]:hidden">Change Theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

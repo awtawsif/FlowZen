@@ -30,7 +30,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Separator } from './ui/separator';
 
 const formSchema = z.object({
-  apiKey: z.string().min(1, 'API Key is required.'),
+  apiKey: z.string(),
   primaryColor: z.string(),
   backgroundColor: z.string(),
   accentColor: z.string(),
@@ -72,7 +72,9 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     // Save API Key
-    setApiKey(values.apiKey);
+    if (values.apiKey) {
+      setApiKey(values.apiKey);
+    }
 
     // Save Custom Theme
     const customTheme = {
@@ -97,6 +99,8 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
       description: 'Your API key and custom theme have been saved.',
     });
     onOpenChange(false);
+    // Reload to apply theme everywhere
+    window.location.reload();
   };
 
   return (
@@ -139,7 +143,7 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
                     <FormItem>
                       <FormLabel>Primary</FormLabel>
                       <FormControl>
-                        <Input type="color" {...field} className="p-1 h-10"/>
+                        <Input type="color" {...field} className="p-1 h-10 w-full"/>
                       </FormControl>
                     </FormItem>
                   )}
@@ -151,7 +155,7 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
                     <FormItem>
                       <FormLabel>Background</FormLabel>
                       <FormControl>
-                         <Input type="color" {...field} className="p-1 h-10" />
+                         <Input type="color" {...field} className="p-1 h-10 w-full" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -163,7 +167,7 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
                     <FormItem>
                       <FormLabel>Accent</FormLabel>
                       <FormControl>
-                         <Input type="color" {...field} className="p-1 h-10"/>
+                         <Input type="color" {...field} className="p-1 h-10 w-full"/>
                       </FormControl>
                     </FormItem>
                   )}
@@ -180,4 +184,3 @@ export function SettingsDialog({ isOpen, onOpenChange }: SettingsDialogProps) {
     </Dialog>
   );
 }
-
