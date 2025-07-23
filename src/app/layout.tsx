@@ -31,14 +31,14 @@ export default function RootLayout({
             'light', 
             'dark', 
             'rose', 
-            'green', 
-            'blue', 
-            'orange', 
-            'zinc',
             'dark-rose',
+            'green', 
             'dark-green',
+            'blue', 
             'dark-blue',
+            'orange', 
             'dark-orange',
+            'zinc',
             'dark-zinc',
           ]}
         >

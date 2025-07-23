@@ -1,4 +1,3 @@
-
 "use client"
 
 import * as React from "react"
@@ -33,7 +32,7 @@ export function ThemeSwitcher() {
             <Sun className="mr-2 h-4 w-4" />
             <span>Default</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("rose")}>
+           <DropdownMenuItem onClick={() => setTheme("rose")}>
             <Palette className="mr-2 h-4 w-4" />
             <span>Rose</span>
           </DropdownMenuItem>
@@ -60,7 +59,7 @@ export function ThemeSwitcher() {
             <Moon className="mr-2 h-4 w-4" />
             <span>Default</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark-rose")}>
+           <DropdownMenuItem onClick={() => setTheme("dark-rose")}>
             <Palette className="mr-2 h-4 w-4" />
             <span>Rose</span>
           </DropdownMenuItem>
