@@ -40,7 +40,6 @@ export default function RootLayout({
             'dark-blue',
             'dark-orange',
             'dark-zinc',
-            'custom'
           ]}
         >
           {children}

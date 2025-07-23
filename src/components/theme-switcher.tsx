@@ -2,9 +2,8 @@
 "use client"
 
 import * as React from "react"
-import { Moon, Sun, Palette, Pencil } from "lucide-react"
+import { Moon, Sun, Palette } from "lucide-react"
 import { useTheme } from "next-themes"
-import { getCustomTheme } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,24 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
-import { ThemeCreatorDialog } from "./theme-creator-dialog"
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme()
-  const [hasCustomTheme, setHasCustomTheme] = React.useState(false);
-  const [isThemeCreatorOpen, setIsThemeCreatorOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    // This effect will run on the client side after component mounts
-    const checkTheme = () => setHasCustomTheme(!!getCustomTheme());
-    checkTheme();
-
-    // Check again when the dialog closes
-    if (!isThemeCreatorOpen) {
-      checkTheme();
-    }
-  }, [isThemeCreatorOpen])
-
 
   return (
     <>
@@ -96,25 +80,8 @@ export function ThemeSwitcher() {
             <Palette className="mr-2 h-4 w-4" />
             <span>Zinc</span>
           </DropdownMenuItem>
-          
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>Custom</DropdownMenuLabel>
-          {hasCustomTheme && (
-              <DropdownMenuItem onClick={() => setTheme("custom")}>
-                <Palette className="mr-2 h-4 w-4" />
-                <span>My Theme</span>
-              </DropdownMenuItem>
-          )}
-           <DropdownMenuItem onClick={() => setIsThemeCreatorOpen(true)}>
-            <Pencil className="mr-2 h-4 w-4" />
-            <span>{hasCustomTheme ? 'Edit My Theme' : 'Create My Theme'}</span>
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <ThemeCreatorDialog 
-        isOpen={isThemeCreatorOpen}
-        onOpenChange={setIsThemeCreatorOpen}
-      />
     </>
   )
 }
