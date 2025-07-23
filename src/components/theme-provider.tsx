@@ -14,6 +14,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
         primary: hexToHsl(customTheme.primary),
         background: hexToHsl(customTheme.background),
         accent: hexToHsl(customTheme.accent),
+        foreground: hexToHsl(customTheme.foreground),
       };
       applyCustomTheme(themeForCss);
     }

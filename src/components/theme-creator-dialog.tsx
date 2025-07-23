@@ -26,12 +26,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from './ui/separator';
 
 const formSchema = z.object({
   primaryColor: z.string(),
   backgroundColor: z.string(),
   accentColor: z.string(),
+  foregroundColor: z.string(),
 });
 
 type ThemeCreatorDialogProps = {
@@ -49,6 +49,7 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
       primaryColor: '#09090b',
       backgroundColor: '#ffffff',
       accentColor: '#f4f4f5',
+      foregroundColor: '#09090b',
     },
   });
 
@@ -59,6 +60,7 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
         form.setValue('primaryColor', customTheme.primary);
         form.setValue('backgroundColor', customTheme.background);
         form.setValue('accentColor', customTheme.accent);
+        form.setValue('foregroundColor', customTheme.foreground);
       }
     }
   }, [isOpen, form]);
@@ -68,6 +70,7 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
       primary: values.primaryColor,
       background: values.backgroundColor,
       accent: values.accentColor,
+      foreground: values.foregroundColor,
     };
     setCustomTheme(customTheme);
 
@@ -75,6 +78,7 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
         primary: hexToHsl(customTheme.primary),
         background: hexToHsl(customTheme.background),
         accent: hexToHsl(customTheme.accent),
+        foreground: hexToHsl(customTheme.foreground),
     };
     applyCustomTheme(themeForCss);
     setTheme('custom');
@@ -98,7 +102,7 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
-               <div className="grid grid-cols-3 gap-4">
+               <div className="grid grid-cols-4 gap-4">
                  <FormField
                   control={form.control}
                   name="primaryColor"
@@ -129,6 +133,18 @@ export function ThemeCreatorDialog({ isOpen, onOpenChange }: ThemeCreatorDialogP
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Accent</FormLabel>
+                      <FormControl>
+                         <Input type="color" {...field} className="p-1 h-10 w-full"/>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="foregroundColor"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Text</FormLabel>
                       <FormControl>
                          <Input type="color" {...field} className="p-1 h-10 w-full"/>
                       </FormControl>

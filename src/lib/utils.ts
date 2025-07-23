@@ -42,6 +42,7 @@ export type CustomTheme = {
   primary: string; // hex
   background: string; // hex
   accent: string; // hex
+  foreground: string; // hex
 }
 
 export type HSLColor = {
@@ -91,7 +92,7 @@ export function hexToHsl(hex: string): HSLColor {
     return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
 
-export function applyCustomTheme(theme: {primary: HSLColor, background: HSLColor, accent: HSLColor}) {
+export function applyCustomTheme(theme: {primary: HSLColor, background: HSLColor, accent: HSLColor, foreground: HSLColor}) {
   let style = document.getElementById('custom-theme-style');
   if (!style) {
     style = document.createElement('style');
@@ -99,8 +100,8 @@ export function applyCustomTheme(theme: {primary: HSLColor, background: HSLColor
     document.head.appendChild(style);
   }
 
-  const foreground = theme.background.l > 50 ? '240 10% 3.9%' : '0 0% 98%';
-  const cardForeground = theme.background.l > 50 ? '240 10% 3.9%' : '0 0% 98%';
+  const foreground = `${theme.foreground.h} ${theme.foreground.s}% ${theme.foreground.l}%`;
+  const cardForeground = foreground;
   const primaryForeground = theme.primary.l > 50 ? '240 10% 3.9%' : '0 0% 98%';
   const mutedForeground = theme.background.l > 50 ? '240 3.8% 46.1%' : '240 5% 64.9%';
   const accentForeground = theme.background.l > 50 ? '240 5.9% 10%' : '0 0% 98%';
