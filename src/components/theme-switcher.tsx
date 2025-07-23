@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
 import { ThemeCreatorDialog } from "./theme-creator-dialog"
 
@@ -43,15 +44,11 @@ export function ThemeSwitcher() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Light Themes</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => setTheme("light")}>
             <Sun className="mr-2 h-4 w-4" />
-            <span>Light</span>
+            <span>Default</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("dark")}>
-            <Moon className="mr-2 h-4 w-4" />
-            <span>Dark</span>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setTheme("rose")}>
             <Palette className="mr-2 h-4 w-4" />
             <span>Rose</span>
@@ -60,19 +57,57 @@ export function ThemeSwitcher() {
             <Palette className="mr-2 h-4 w-4" />
             <span>Green</span>
           </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("blue")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Blue</span>
+          </DropdownMenuItem>
+           <DropdownMenuItem onClick={() => setTheme("orange")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Orange</span>
+          </DropdownMenuItem>
+           <DropdownMenuItem onClick={() => setTheme("zinc")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Zinc</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Dark Themes</DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <Moon className="mr-2 h-4 w-4" />
+            <span>Default</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark-rose")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Rose</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark-green")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Green</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setTheme("dark-blue")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Blue</span>
+          </DropdownMenuItem>
+           <DropdownMenuItem onClick={() => setTheme("dark-orange")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Orange</span>
+          </DropdownMenuItem>
+           <DropdownMenuItem onClick={() => setTheme("dark-zinc")}>
+            <Palette className="mr-2 h-4 w-4" />
+            <span>Zinc</span>
+          </DropdownMenuItem>
           
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Custom</DropdownMenuLabel>
           {hasCustomTheme && (
               <DropdownMenuItem onClick={() => setTheme("custom")}>
                 <Palette className="mr-2 h-4 w-4" />
                 <span>My Theme</span>
               </DropdownMenuItem>
           )}
-
-          <DropdownMenuSeparator />
-
            <DropdownMenuItem onClick={() => setIsThemeCreatorOpen(true)}>
             <Pencil className="mr-2 h-4 w-4" />
-            <span>{hasCustomTheme ? 'Edit My Theme' : 'Create Custom Theme'}</span>
+            <span>{hasCustomTheme ? 'Edit My Theme' : 'Create My Theme'}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
