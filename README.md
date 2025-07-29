@@ -37,9 +37,8 @@ To get FlowZen up and running on your local machine, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository_url>
+    git clone https://github.com/awtawsif/FlowZen.git
     ```
-    Replace `<repository_url>` with the actual URL of the FlowZen repository.
 2.  **Install dependencies:**
     ```bash
     npm install
