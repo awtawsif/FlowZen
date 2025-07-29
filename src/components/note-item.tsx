@@ -4,11 +4,11 @@
 import { useState, useRef, useEffect } from 'react';
 import type { Note } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
+import { MarkdownEditor } from './markdown-editor';
 
 type NoteItemProps = {
   note: Note;
@@ -18,24 +18,14 @@ type NoteItemProps = {
 
 export function NoteItem({ note, onUpdateNote, onDeleteNote }: NoteItemProps) {
   const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setTitle(note.title);
-    setContent(note.content);
   }, [note]);
 
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = e.target.value;
-    setContent(newContent);
-    
-    if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-    }
-    debounceTimeout.current = setTimeout(() => {
-        onUpdateNote({ ...note, title, content: newContent });
-    }, 500);
+  const handleContentChange = (newContent: string) => {
+    onUpdateNote({ ...note, content: newContent });
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +36,7 @@ export function NoteItem({ note, onUpdateNote, onDeleteNote }: NoteItemProps) {
         clearTimeout(debounceTimeout.current);
     }
     debounceTimeout.current = setTimeout(() => {
-        onUpdateNote({ ...note, title: newTitle, content });
+        onUpdateNote({ ...note, title: newTitle });
     }, 500);
   };
 
@@ -64,11 +54,9 @@ export function NoteItem({ note, onUpdateNote, onDeleteNote }: NoteItemProps) {
         </Button>
       </CardHeader>
       <CardContent className="p-4 pt-0 flex-grow">
-        <Textarea
-          value={content}
+        <MarkdownEditor
+          value={note.content}
           onChange={handleContentChange}
-          placeholder="Start writing..."
-          className="w-full h-full resize-none border-none shadow-none focus-visible:ring-0 p-0"
         />
       </CardContent>
        <CardFooter className="p-4 pt-0">
