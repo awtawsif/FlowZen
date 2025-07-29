@@ -2,16 +2,17 @@
 
 import { useState } from 'react';
 import type { List, Note, Task } from '@/lib/types';
-import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset, useSidebar } from '@/components/ui/sidebar';
 import { SidebarNav } from './sidebar-nav';
 import { TaskView } from './task-view';
 import { NoteView } from './note-view';
 
-export function AppShell() {
+function AppShellContent() {
   const [lists, setLists] = useState<List[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [activeView, setActiveView] = useState<'tasks' | 'notes'>('tasks');
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
+  const { setOpen } = useSidebar();
 
   const handleSelectList = (id: string) => {
     setActiveView('tasks');
@@ -32,6 +33,7 @@ export function AppShell() {
     setLists((prev) => [...prev, newList]);
     setActiveView('tasks');
     setSelectedListId(newList.id);
+    setOpen(false);
   };
 
   const handleUpdateTask = (listId: string, updatedTask: Task) => {
@@ -95,7 +97,7 @@ export function AppShell() {
   const selectedList = lists.find(list => list.id === selectedListId);
 
   return (
-    <SidebarProvider>
+    <>
       <SidebarNav
         lists={lists}
         selectedListId={selectedListId}
@@ -130,6 +132,14 @@ export function AppShell() {
             </div>
           )}
       </SidebarInset>
+    </>
+  );
+}
+
+export function AppShell() {
+  return (
+    <SidebarProvider>
+      <AppShellContent />
     </SidebarProvider>
   );
 }
